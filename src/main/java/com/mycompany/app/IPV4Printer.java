@@ -1,6 +1,7 @@
 package com.mycompany.app;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /*        На вход программе задаются два IP адреса, программа перебирает все
@@ -82,7 +83,7 @@ public class IPV4Printer {
         String networkBody = a[0] + "." + a[1] + "." + a[2] + ".";
         int[] tempArray = new int[]{a[3], b[3]};
         Arrays.sort(tempArray);
-            if ((tempArray[1] - tempArray[0] <=1)) {
+            if ((tempArray[1] - tempArray[0] <= 1)) {
                 System.out.println("В указанном диапазоне нет IP.");
             } else {
                 int networkElement = tempArray[0] + 1;

@@ -3,6 +3,7 @@ package com.mycompany.app;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /*2. Есть программа, хранящая в памяти телефонную книгу (забита в коде программы).
@@ -33,35 +34,30 @@ import java.util.*;
 
 public class TelephonesPrinter {
 
-    private final static Map<String, List<String>> ResultMap = new HashMap<>();
-    private final static List<String> list1 = new ArrayList<>();
-    private final static List<String> list2 = new ArrayList<>();
+    static Map<String, List<String>> ResultMap;
+
     static {
+        ResultMap = new HashMap<>();
+        List<String> list1 = new ArrayList<>();
+        List<String> list2 = new ArrayList<>();
+        List<String> list3 = new ArrayList<>();
+        list1.add("+8 800 2000 500");
         list1.add("+8 800 200 600");
-        list1.add("+8 800 200 601");
-        list2.add("+8 800 200 603");
-        ResultMap.put("test1", list1);
-        ResultMap.put("test2", list2);
+        list2.add("+8 800 2000 700");
+        list3.add("+8 800 2000 800");
+        list3.add("+8 800 2000 900");
+        list3.add("+8 800 2000 000");
+        ResultMap.put("Иванов И.И.",list1);
+        ResultMap.put("Петров П.П.",list2);
+        ResultMap.put("Сидоров С.С.",list3);
     }
 
     public static void main(String[] args) {
         BufferedReader bufferedReader = null;
         try {
-            bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            bufferedReader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
             String stringFromSystemIn = bufferedReader.readLine();
-            if (ResultMap.containsKey(stringFromSystemIn)) {
-                for (Map.Entry<String, List<String>> mapEntry: ResultMap.entrySet()) {
-                    String key = mapEntry.getKey();
-                    List<String> value = mapEntry.getValue();
-                    if (key.equals(stringFromSystemIn)) {
-                        for (int i = 0; i < value.size(); i++) {
-                            System.out.println(value.get(i));
-                        }
-                    }
-                }
-            } else {
-                System.out.println(stringFromSystemIn + " ФИО в базе нет.");
-            }
+            print(stringFromSystemIn);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -77,8 +73,39 @@ public class TelephonesPrinter {
         }
     }
 
-}
+    static void print (String string) {
+        if ((string!=null)&&(ResultMap!= null)) {
+            if (isUserExist(string)) {
+                List<String> value = getUserTelephones(string);
+                for (int i = 0; i < value.size(); i++) {
+                    System.out.println((i+1) + ". " + value.get(i));
+                }
+            }
+        } else {
+            System.out.println(string + " ФИО в базе нет.");
+        }
+    }
 
+    static boolean isUserExist (String string) {
+        if(ResultMap.containsKey(string)) {
+            return true;
+        }
+        return false;
+    }
+
+    static List<String> getUserTelephones(String string) {
+        List<String> list = new ArrayList<>();
+        for (Map.Entry<String, List<String>> mapEntry: ResultMap.entrySet()) {
+            String key = mapEntry.getKey();
+            List<String> value = mapEntry.getValue();
+            if (key.equals(string)) {
+                return value;
+            }
+        }
+        return list;
+    }
+
+}
 
 
 
