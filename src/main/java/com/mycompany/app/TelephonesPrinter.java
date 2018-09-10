@@ -87,10 +87,7 @@ public class TelephonesPrinter {
     }
 
     static boolean isUserExist (String string) {
-        if(ResultMap.containsKey(string)) {
-            return true;
-        }
-        return false;
+        return ResultMap.containsKey(string);
     }
 
     static List<String> getUserTelephones(String string) {

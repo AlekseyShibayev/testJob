@@ -1,7 +1,6 @@
 package com.mycompany.app;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /*        На вход программе задаются два IP адреса, программа перебирает все
@@ -54,9 +53,8 @@ public class IPV4Printer {
 
      static boolean isCorrectIPV4Address (String string) {
         if (string != null) {
-            if (string.matches("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")) {
-                return true;
-            }
+            return string.matches("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                    "){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
         }
         return false;
     }
